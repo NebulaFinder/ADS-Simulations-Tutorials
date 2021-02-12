@@ -1,0 +1,49 @@
+; Top Design: "AC_lib:LPF_S_parameters_1:schematic"
+; Netlisted using Hierarchy Policy: "Standard"
+
+Options ResourceUsage=yes UseNutmegFormat=no EnableOptim=no TopDesignName="AC_lib:LPF_S_parameters_1:schematic" DcopOutputNodeVoltages=yes DcopOutputPinCurrents=yes DcopOutputAllSweepPoints=no DcopOutputDcopType=0
+; Library Name: ads_simulation
+; Cell Name: SP_NWA
+; View Name: schematic
+define SP_NWA ( N__3  N__0 ) 
+parameters  Start=1 GHz  Stop=10 GHz  NumPoints=101  VBias1=0  VBias2=0  Port1Z=50  Port2Z=50 
+S_Param:SP1 CalcS=yes GroupDelayAperture=1e-4 FreqConversion=no FreqConversionPort=1 StatusLevel=2 CalcNoise=no SortNoise=0 BandwidthForNoise=1.0 Hz DevOpPtLevel=0 \
+SweepVar="freq" SweepPlan="SP1_stim" OutputPlan="SP1_Output" 
+
+SweepPlan: SP1_stim Start=Start Stop=Stop Lin=NumPoints 
+
+OutputPlan:SP1_Output \
+      Type="Output" \
+      UseEquationNestLevel=yes \
+      EquationNestLevel=2 \
+      UseSavedEquationNestLevel=yes \
+      SavedEquationNestLevel=2
+
+#load "python","LinearCollapse"
+Component Module="LinearCollapse" Type="ModelExtractor" NetworkRepresentation=2
+Short:DC_Block2  N__0 N__1 Mode=1 
+Short:DC_Block1  N__2 N__3 Mode=1 
+V_Source:SRC1  N__5 0 Type="V_DC" Vdc=VBias1 SaveCurrent=1 
+Short:DC_Feed1  N__3 N__5 Mode=-1 
+R:R2  N__0 0 R=VeryLarge Noise=yes 
+R:R1  N__3 0 R=VeryLarge Noise=yes 
+V_Source:SRC2  N__6 0 Type="V_DC" Vdc=VBias2 SaveCurrent=1 
+Short:DC_Feed2  N__0 N__6 Mode=-1 
+
+VeryLarge=1e12
+Port:Term2  N__1 0 Num=2 Z=Port2Z Noise=yes 
+Port:Term1  N__2 0 Num=1 Z=Port1Z Noise=yes 
+
+Options:Options1 Tnom=25 ForceS_Params=yes V_RelTol=1e-6 I_RelTol=1e-6 GiveAllWarnings=yes  \
+MaxWarnings=10 ForceM_Params=yes DC_ReadInitialGuess=no DC_WriteFinalSolution=no TopologyCheckMessages=no  \
+GPU=no doDeltaAC=no ReduceSPort=no ReduceSPortRatio=0.5 WarnSOA=yes  \
+MaxWarnSOA=5 Census=no MinNodalR=1e-2 Ohm LargeCapThreshold=1e-3 F EnableAssertChecks=no EnableSpareRemoval=no 
+
+end SP_NWA
+
+C:C4  N__5 0 C=10 pF 
+SP_NWA:SP_NWA1  N__1 N__0 Start=10 Hz Stop=1 GHz NumPoints=101 VBias1=0 VBias2=0 Port1Z=50 Port2Z=50 
+L:L7  N__1 N__5 L=10 nH Noise=yes  
+L:L8  N__5 N__3 L=10 nH Noise=yes  
+L:L9  N__3 N__0 L=10 nH Noise=yes  
+C:C5  N__3 0 C=10 pF 

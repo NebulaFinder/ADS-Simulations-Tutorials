@@ -1,0 +1,15 @@
+
+hpeesofsim (*) 530.shp Aug 11 2020, MINT version 5
+    (64-bit windows built: Wed Aug 12, 2020 02:42:05 +0000)
+
+Error detected by hpeesofsim during SP analysis `SP1'.
+             Duplicate Port or Term number for `Term1'
+
+
+-------------------------------------------------------------------------------
+Simulation finished with errors.
+-------------------------------------------------------------------------------
+
+Resource usage:
+  Total stopwatch time     =     1.01 seconds.
+

@@ -1,0 +1,11 @@
+
+hpeesofsim (*) 530.shp Aug 11 2020, MINT version 5
+    (64-bit windows built: Wed Aug 12, 2020 02:42:05 +0000)
+
+
+SP SP_NWA1.SP1[1] <AC_lib:LPF_S_parameters_1:schematic>   freq=(10 Hz->1 GHz)
+
+
+Resource usage:
+  Total stopwatch time     =     1.17 seconds.
+
